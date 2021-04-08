@@ -14,40 +14,44 @@ from rb.core.text_element import TextElement
 
 logger = Logger.get_logger()
 
+class KeywordExtractor:
 
-def extract_keywords(text: Union[str, TextElement], lang: Lang = Lang.RO, max_keywords: int = 40, vector_model: VectorModel = None, threshold: float = 0.3) -> List[Tuple[float, str]]:
+    def __init__(self):
+        pass
 
-    if vector_model is None:
-        vector_model = get_default_model(lang)
-    logger.info('Computing keywords...')
-    if not isinstance(text, TextElement):
-        doc = Document(lang=lang, text=text)
-    else:
-        doc = text
-    lemma_words, raw_words = [], []
-    scores: List[Tuple[float, Word]] = []
+    def extract_keywords(text: Union[str, TextElement], lang: Lang = Lang.RO, max_keywords: int = 40, vector_model: VectorModel = None, threshold: float = 0.3) -> List[Tuple[float, str]]:
 
-    for word in doc.get_words():
-        if word.is_content_word() and not word.is_stop:
-            raw_words.append(word)
+        if vector_model is None:
+            vector_model = get_default_model(lang)
+        logger.info('Computing keywords...')
+        if not isinstance(text, TextElement):
+            doc = Document(lang=lang, text=text)
+        else:
+            doc = text
+        lemma_words, raw_words = [], []
+        scores: List[Tuple[float, Word]] = []
 
-    counter = Counter(raw_words)
-    
-    score_dict = {}
-    for word, freq in counter.items():
-        if word.lemma not in score_dict:
-            score_dict[word.lemma] = 0
-        freq = 1 + math.log(freq)
-        sim = vector_model.similarity(word, doc)
-        score_dict[word.lemma] += sim * freq
+        for word in doc.get_words():
+            if word.is_content_word() and not word.is_stop:
+                raw_words.append(word)
 
-    scores = [(score, lemma) for lemma, score in score_dict.items()]
-    scores = sorted(scores, reverse=True, key=lambda x: x[0])
-    scores.reverse()
-    idx = bisect.bisect(scores, (threshold, ))
-    scores.reverse()
-    if max_keywords == -1:
-        return scores
-    return scores[:len(scores)-idx]
-    # return scores[:max_keywords]
+        counter = Counter(raw_words)
+        
+        score_dict = {}
+        for word, freq in counter.items():
+            if word.lemma not in score_dict:
+                score_dict[word.lemma] = 0
+            freq = 1 + math.log(freq)
+            sim = vector_model.similarity(word, doc)
+            score_dict[word.lemma] += sim * freq
+
+        scores = [(score, lemma) for lemma, score in score_dict.items()]
+        scores = sorted(scores, reverse=True, key=lambda x: x[0])
+        scores.reverse()
+        idx = bisect.bisect(scores, (threshold, ))
+        scores.reverse()
+        if max_keywords == -1:
+            return scores
+        return scores[:len(scores)-idx]
+        # return scores[:max_keywords]
 

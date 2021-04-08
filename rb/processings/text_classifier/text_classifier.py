@@ -14,7 +14,7 @@ import pickle
 import os
 import csv
 import random
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 import uuid
 from rb.cna.cna_graph import CnaGraph
 from rb.utils.rblogger import Logger
