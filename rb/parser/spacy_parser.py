@@ -69,6 +69,21 @@ def convertToPenn(pos: str, lang: Lang) -> str:
         if pos.startswith("cconj"):
             return "CC"
         return ""
+    if lang == Lang.DE:
+        pos = pos.lower()
+        if pos.startswith('noun') or pos.startswith('propn'):
+            return "NN"
+        if pos.startswith("verb"):
+            return "VB"
+        if pos.startswith("adj"):
+            return "JJ"
+        if pos.startswith("adv"):
+            return "RB"
+        if pos.startswith("adp"):
+            return "IN"
+        if pos.startswith("cconj"):
+            return "CC"
+        return ""
     if lang == Lang.NL:
         pos = pos.lower()
         if pos.startswith('n_') or pos.startswith('n|') or pos.startswith('propn'):

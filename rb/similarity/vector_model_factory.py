@@ -26,6 +26,13 @@ VECTOR_MODELS = {
             VectorModelType.LSA: LSA
         }
     },
+    Lang.DE: {
+        CorporaEnum.WIKIBOOKS: {
+            VectorModelType.WORD2VEC: Word2Vec,
+            VectorModelType.LDA: LDA,
+            VectorModelType.LSA: LSA
+        }
+    },
     Lang.ES: {
         CorporaEnum.JOSE_ANTONIO: {
             VectorModelType.WORD2VEC: Word2Vec
@@ -49,7 +56,8 @@ DEFAULT_MODELS = {
     Lang.EN: (VectorModelType.WORD2VEC, CorporaEnum.COCA),
     Lang.ES: (VectorModelType.WORD2VEC, CorporaEnum.JOSE_ANTONIO),
     Lang.RU: (VectorModelType.WORD2VEC, CorporaEnum.RNC_WIKIPEDIA),
-    Lang.FR: (VectorModelType.WORD2VEC, CorporaEnum.LE_MONDE)    
+    Lang.FR: (VectorModelType.WORD2VEC, CorporaEnum.LE_MONDE),
+    Lang.DE: (VectorModelType.WORD2VEC, CorporaEnum.WIKIBOOKS)   
 }
 
 EXISTING_MODELS = {}

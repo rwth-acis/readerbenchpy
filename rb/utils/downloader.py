@@ -9,6 +9,18 @@ from rb.core.lang import Lang
 from rb.utils.rblogger import Logger
 
 LINKS = {
+    Lang.DE: {
+        'models':{
+            'wikibooks':{
+                'link':"https://rwth-aachen.sciebo.de/s/CNv6Fi4Wzl9D9Mt/download",
+                'version': "https://rwth-aachen.sciebo.de/s/kg5Tx1hu05NGGPl/download"
+            }
+        },
+        'wordlists': {
+            'link': "https://rwth-aachen.sciebo.de/s/PMIjzRYfWbsg8F8/download",
+            'version':  'https://rwth-aachen.sciebo.de/s/kg5Tx1hu05NGGPl/download'
+        }
+    },
     Lang.EN: {
         'models': {
             'coca': {

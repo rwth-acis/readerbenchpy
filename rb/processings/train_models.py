@@ -57,6 +57,8 @@ class Preprocess(object):
 def train_w2v(sentences: Preprocess, outputFolder: str):
     global logger
     logger.info("Starting training word2vec...")
+    #Size parameter is deprecated in gensim 4
+    #model = Word2Vec(window=5, min_count=5, workers=16)
     model = Word2Vec(size=300, window=5, min_count=5, workers=16)
     model.build_vocab(sentences=sentences)
     total_words = model.corpus_total_words  # number of words in the corpus
@@ -65,14 +67,15 @@ def train_w2v(sentences: Preprocess, outputFolder: str):
 
     model.train(sentences=sentences, total_words=total_words, total_examples=total_examples, epochs=5)  # train
     path = outputFolder + "/word2vec.model"
-    model.save(path)
+    #model.save(path)
+    model.wv.save_word2vec_format(path, binary=False)
     logger.info("Model word2vec saved to {}".format(path))
 
 # load_word2vec_format should be True if the model was saved with saved  model.wv.save_word2vec_format(path, binary=False)
 # if the model was saved simply with model.save(path) load_word2vec_format should be False
 def test_load_w2v(path_w2vec: str, load_word2vec_format=False):
     test_words = ["alunec", 'merg', 'ajung', 'plec', 'coleg']
-    if load_word2vec_format == True:
+    if load_word2vec_format == True:    
         model = KeyedVectors.load_word2vec_format(path_w2vec, binary=False)
     else:
         model = Word2Vec.load(path_w2vec)
@@ -80,6 +83,7 @@ def test_load_w2v(path_w2vec: str, load_word2vec_format=False):
         if tw in model.wv:
             logger.info('Word vector for {} {}'.format(tw, model.wv[tw]))
     logger.info('word2vec loaded successfully')
+    
 
 def train_fast_text(sentences: Preprocess, outputFolder: str):
     logger.info("Starting training fast text ...")
@@ -200,7 +204,7 @@ def preprocess(parser: SpacyParser, folder: str, lang: Lang,
 
 if __name__ == "__main__":
     #inputFolder= "resources/corpora/FR/Le Monde"
-    inputFolder = "/home/teo/projects/newsanalyser/dumped-news-sample"
+    inputFolder = "/home/user/projects/wikipedia/dumped-articles-sample"
     parser = SpacyParser.get_instance()
     logger.info("Loading dataset from {}".format(inputFolder))
     sentences = Preprocess(parser, inputFolder, Lang.RO, split_sent=False, only_dict_words=False)

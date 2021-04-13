@@ -54,6 +54,8 @@ def do_scoring():
             model = create_vector_model(Lang.RO, VectorModelType.from_str('word2vec'), "readme")
         elif args.scoring_lang is Lang.EN:
             model = create_vector_model(Lang.EN, VectorModelType.from_str("word2vec"), "coca")
+        elif args.scoring_lang is Lang.DE:
+            model = create_vector_model(Lang.DE, VectorModelType.from_str("word2vec"), "wikibooks")
         else:
             logger.info(f'Unsopported lang {args.scoring_lang}')
 
@@ -123,7 +125,7 @@ def do_train_model():
     elif model is VectorModelType.WORD2VEC:
         train_w2v(sentences, args.train_base_folder)
         test_load_w2v(path_w2vec=os.path.join(args.train_base_folder, 'word2vec.model'), 
-                      load_word2vec_format=False)
+                      load_word2vec_format=True)
     else:
         logger.info('Model name not found')
 
@@ -132,6 +134,8 @@ def do_indices():
         model = create_vector_model(Lang.RO, VectorModelType.from_str('word2vec'), "readme")
     elif args.indices_lang is Lang.EN:
         model = create_vector_model(Lang.EN, VectorModelType.from_str("word2vec"), "coca")
+    elif args.indices_lang is Lang.DE:
+        model = create_vector_model(Lang.DE, VectorModelType.from_str("word2vec"), "wikibooks")
     else:
         logger.info(f'No module for lang {args.indices_lang}')
         return
@@ -144,7 +148,7 @@ def do_indices():
         doc = Document(lang=args.indices_lang, text=content)
         """you can compute indices without the cna graph, but this means 
            some indices won't be computed"""
-        cna_graph = CnaGraph(doc=doc, models=[model])
+        cna_graph = CnaGraph(docs=doc, models=[model])
         compute_indices(doc=doc, cna_graph=cna_graph)
         
         if i == 0: # first row ith indices name
@@ -235,14 +239,14 @@ if __name__ == "__main__":
     """parameters for keywords"""
     parser.add_argument('--keywords', dest='keywords', action='store_true', default=False)
     parser.add_argument('--keywords_lang', dest='keywords_lang', default=Lang.RO.value, nargs='?', 
-                        choices=[Lang.RO.value, Lang.EN.value], help='Language for keywords')
+                        choices=[Lang.RO.value, Lang.EN.value, Lang.DE], help='Language for keywords')
     """parameters for training models (LDA, LSA word2vec) 
        default parameters for training are good.
        TODO add parameters for training"""
     parser.add_argument('--train_model', dest='train_model', default='None', nargs='?',
                         choices=[VectorModelType.LDA.name, VectorModelType.LSA.name, VectorModelType.WORD2VEC.name, 'None'])
     parser.add_argument('--train_lang', dest='train_lang', default=Lang.RO.value, nargs='?', 
-                        choices=[Lang.RO.value, Lang.ES.value, Lang.EN.value], 
+                        choices=[Lang.RO.value, Lang.ES.value, Lang.EN.value, Lang.DE.value], 
                         help='Language for model')
     parser.add_argument('--train_base_folder', dest='train_base_folder', action='store', default='.',
                         help='Base folder for .txt files. Only files ended in .txt count')
@@ -252,9 +256,9 @@ if __name__ == "__main__":
        TODO add parameters for the other models"""
     parser.add_argument('--indices', dest='indices', action='store_true', default=False)
     parser.add_argument('--indices_lang', dest='indices_lang', default=Lang.RO.value, nargs='?', 
-                        choices=[Lang.RO.value, Lang.EN.value], 
+                        choices=[Lang.RO.value, Lang.EN.value, Lang.DE.value], 
                         help='Language for indices')
-    parser.add_argument('--indices_base_folder', dest='indices_base_folder', action='store', default='.',
+    parser.add_argument('--indices_base_folder', dest='indices_base_folder', action='store', default='/home/user/rb_out/indices_base_folder/',
                         help='Base folder for files. Only files ended in .txt count. Each file is considered a document')
 
     """ generate extreme values for indices"""
