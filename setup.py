@@ -56,12 +56,12 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name='rbpy-rb',
-    version='0.10.26',
+    name='rbpy-rb-german',
+    version='0.0.1',
     python_requires='>=3.6,<3.9',
-    author='Woodcarver',
-    author_email='batpepastrama@gmail.com',
-    description='ReaderBench library written in python',
+    author='Karl Zeufack',
+    author_email='karl.zeufack@rwth-aachen.de',
+    description='German version of ReaderBench library written in python',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://git.readerbench.com/ReaderBench/Readerbench-python',
