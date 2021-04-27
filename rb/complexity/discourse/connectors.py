@@ -132,52 +132,52 @@ class Connector(ComplexityIndex):
                         continue
                     elif conn_type is not None:
                         Connector.conn_dict[conn_type].append(line.strip())
-        """ elif lang is Lang.DE:
+            elif lang is Lang.DE:
                 for i, line in enumerate(f):
-                    if line.find('coordinating_connectives') != -1:
+                    if line.find('koordinierende_Verbindungen') != -1:
                         conn_type = ConnTypeEnum.COORD
-                    elif line.find('logical_connectors') != -1:
+                    elif line.find('logische_Verbindungen') != -1:
                         conn_type = ConnTypeEnum.LOGIC
-                    elif line.find('semi_coordinators') != -1:
+                    elif line.find('semi_Koordinatoren') != -1:
                         conn_type = ConnTypeEnum.SEMI
-                    elif line.find('quasi_coordinators') != -1:
+                    elif line.find('quasi_Koordinatoren') != -1:
                         conn_type = ConnTypeEnum.QUASI
-                    elif line.find('conjunctions') != -1:
+                    elif line.find('konjunktionen') != -1:
                         conn_type = ConnTypeEnum.CONJ
-                    elif line.find('disjunctions') != -1:
+                    elif line.find('disjunktionen') != -1:
                         conn_type = ConnTypeEnum.DISJ
-                    elif line.find('simple_subordinators') != -1:
+                    elif line.find('einfache_subordinatoren') != -1:
                         conn_type = ConnTypeEnum.SIMPLE
-                    elif line.find('complex_subordinators') != -1:
+                    elif line.find('komplexe_subordinatoren') != -1:
                         conn_type = ConnTypeEnum.COMPLEX
-                    elif line.find('coordinating_conjuncts') != -1:
+                    elif line.find('koordination_konjunktionen') != -1:
                         conn_type = ConnTypeEnum.CONJ
                     elif line.find('addition') != -1:
                         conn_type = ConnTypeEnum.ADDITION
-                    elif line.find('contrasts') != -1:
+                    elif line.find('kontraste') != -1:
                         conn_type = ConnTypeEnum.CONTRAST
-                    elif line.find('sentence_linking') != -1:
+                    elif line.find('satz_verknuepfung') != -1:
                         conn_type = ConnTypeEnum.LINK
-                    elif line.find('order') != -1:
+                    elif line.find('reihenfolge') != -1:
                         conn_type = ConnTypeEnum.ORDER
-                    elif line.find('reference') != -1:
+                    elif line.find('verweis') != -1:
                         conn_type = ConnTypeEnum.REFERENCE
-                    elif line.find('reason_and_purpose') != -1:
+                    elif line.find('grund_und_zweck') != -1:
                         conn_type = ConnTypeEnum.REASONANDPURPOSE
-                    elif line.find('conditions') != -1:
+                    elif line.find('bedingungen') != -1:
                         conn_type = ConnTypeEnum.COND
-                    elif line.find('concessions') != -1:
+                    elif line.find('konzessionen') != -1:
                         conn_type = ConnTypeEnum.CONCC
-                    elif line.find('oppositions') != -1:
+                    elif line.find('oppositionen') != -1:
                         conn_type = ConnTypeEnum.OPPOSIT
-                    elif line.find('temporal_connectors') != -1:
+                    elif line.find('temporale_Verbindungen') != -1:
                         conn_type = ConnTypeEnum.TEMPORAL
-                    elif line.find('conjuncts') != -1:
+                    elif line.find('konjunktionen') != -1:
                         conn_type = ConnTypeEnum.CONJUNCTS
                     elif len(line.strip()) == 0:
                         continue
                     elif conn_type is not None:
-                        Connector.conn_dict[conn_type].append(line.strip())"""
+                        Connector.conn_dict[conn_type].append(line.strip())
 
     def process(self, element: TextElement) -> float:
         return self.reduce_function(self.compute_above(element))
