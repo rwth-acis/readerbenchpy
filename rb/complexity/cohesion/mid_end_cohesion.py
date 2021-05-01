@@ -43,8 +43,11 @@ class MiddleEndCohesion(ComplexityIndex):
                 if i == end_index:  continue
                 sim_edge = self.cna_graph.edges(node=(end_block, blocks[i]), edge_type=EdgeType.SEMANTIC,
                                                 vector_model=None)
-                v = sim_edge[0][2]
-                weighted_sum += v * (1.0 / (end_index - i))
-                scale_factor += (1.0 / (end_index -  i))
+                try:
+                    v = sim_edge[0][2]
+                    weighted_sum += v * (1.0 / (end_index - i))
+                    scale_factor += (1.0 / (end_index -  i))
+                except:
+                    continue
             element.indices[self] = weighted_sum / scale_factor 
             return element.indices[self]

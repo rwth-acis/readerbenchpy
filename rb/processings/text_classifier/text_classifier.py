@@ -65,6 +65,8 @@ class TextClassifier:
                             break
                 results.append(res)
         return results
+    
+
 
     def train_svm(self, results: List[List], save_model_file=None):
         total = len(results)

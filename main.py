@@ -48,7 +48,7 @@ def do_scoring():
     essay_scoring = EssayScoring()
 
     """ score is computed based on a predfined list of indices defined in rb/processings/scoring/*.txt)
-        if you change the indicies in that list you have to reatrin the model (SVM)  """
+        if you change the indicies in that list you have to reatrin the model (SVM)  for the classification"""
     if args.scoring_actualize_indices:
         if args.scoring_lang is Lang.RO:
             model = create_vector_model(Lang.RO, VectorModelType.from_str('word2vec'), "readme")
@@ -60,14 +60,14 @@ def do_scoring():
             logger.info(f'Unsopported lang {args.scoring_lang}')
 
         doc = Document(lang=args.indices_lang, text=test)
-        cna_graph = CnaGraph(doc=doc, models=[model])
+        cna_graph = CnaGraph(docs=doc, models=[model])
         compute_indices(doc=doc, cna_graph=cna_graph)
         indices = [repr(key) for key, _ in doc.indices.items()]
         with open(f'rb/processings/scoring/indices_{args.scoring_lang.value}_scoring.txt', 'wt', encoding='utf-8') as f:
             for ind in indices:
                 f.write(ind + '\n')
     elif args.scoring_predict == False:
-        essay_scoring.create_files_from_csv(path_to_csv_file='essays.csv', path_to_folder=args.scoring_base_folder)
+        essay_scoring.create_files_from_csv(path_to_csv_file='/home/user/rb_out/scoring/essays.csv', path_to_folder=args.scoring_base_folder)
         essay_scoring.compute_indices(base_folder=args.scoring_base_folder,
                                     write_file=args.scoring_indices_output_csv_file, 
                                     stats=args.scoring_stats_file, lang=args.scoring_lang, 
@@ -156,8 +156,10 @@ def do_indices():
                 indices_abbr.append(repr(key))
             all_rows.append(['filename'] + indices_abbr)
         
-
-        assert len(indices_abbr) == len(doc.indices.items()), 'wrong nr of indices'
+        try:
+            assert len(indices_abbr) == len(doc.indices.items()), 'wrong nr of indices'
+        except:
+                continue 
         row = [filename]
 
         "TODO O(n * m) can be done in O(m)"
@@ -219,7 +221,7 @@ if __name__ == "__main__":
                         action='store', default='resources/ro/scoring/svr_gamma.p',
                         help='Pickle file for the model')
     parser.add_argument('--scoring_lang', dest='scoring_lang', default=Lang.RO.value, nargs='?', 
-                        choices=[Lang.RO.value], help='Language for scoring (only ro supported)')
+                        choices=[Lang.RO.value, Lang.DE.value], help='Language for scoring (only ro supported)')
 
     """params for scoring"""
     parser.add_argument('--classifier', dest='classifier', action='store_true', default=False)
@@ -239,7 +241,7 @@ if __name__ == "__main__":
     """parameters for keywords"""
     parser.add_argument('--keywords', dest='keywords', action='store_true', default=False)
     parser.add_argument('--keywords_lang', dest='keywords_lang', default=Lang.RO.value, nargs='?', 
-                        choices=[Lang.RO.value, Lang.EN.value, Lang.DE], help='Language for keywords')
+                        choices=[Lang.RO.value, Lang.EN.value, Lang.DE.value], help='Language for keywords')
     """parameters for training models (LDA, LSA word2vec) 
        default parameters for training are good.
        TODO add parameters for training"""

@@ -41,8 +41,11 @@ class StartMiddleCohesion(ComplexityIndex):
                 if i == 0:  continue
                 sim_edge = self.cna_graph.edges(node=(start_block, blocks[i]), edge_type=EdgeType.SEMANTIC, 
                                                 vector_model=None)
-                v = sim_edge[0][2]
-                weighted_sum += v * (1.0 / i)
-                scale_factor += (1.0 / i)
+                try:                                    
+                    v = sim_edge[0][2]
+                    weighted_sum += v * (1.0 / i)
+                    scale_factor += (1.0 / i)
+                except:
+                    continue    
             element.indices[self] = weighted_sum / scale_factor 
             return element.indices[self]

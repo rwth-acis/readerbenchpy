@@ -50,24 +50,36 @@ class AdjExternalCohesion(ComplexityIndex):
         else:
             for i, elem in enumerate(elems):
                 if i == 0:
-                    sim_edge = self.cna_graph.edges(node=(elems[i], elems[i + 1]), edge_type=EdgeType.SEMANTIC,
+                    try:
+                        sim_edge = self.cna_graph.edges(node=(elems[i], elems[i + 1]), edge_type=EdgeType.SEMANTIC,
                                                     vector_model=None)
-                    v = sim_edge[0][2]
-                    elems[i].indices[self] = v
+                        v = sim_edge[0][2]
+                    
+                        elems[i].indices[self] = v
+                    except:
+                        continue
                 elif i == len(elems) - 1:
-                    sim_edge = self.cna_graph.edges(node=(elems[i], elems[i - 1]), edge_type=EdgeType.SEMANTIC,
+                    try:
+                        sim_edge = self.cna_graph.edges(node=(elems[i], elems[i - 1]), edge_type=EdgeType.SEMANTIC,
                                                     vector_model=None)
-                    v = sim_edge[0][2]
-                    elems[i].indices[self] = v
+                        v = sim_edge[0][2]
+                    
+                        elems[i].indices[self] = v
+                    except:
+                        continue
                 else:
-                    sim_edge = self.cna_graph.edges(node=(elems[i], elems[i - 1]), edge_type=EdgeType.SEMANTIC,
+                    try:
+                        sim_edge = self.cna_graph.edges(node=(elems[i], elems[i - 1]), edge_type=EdgeType.SEMANTIC,
                                                     vector_model=None)
-                    v = sim_edge[0][2]
-                    sim_edge = self.cna_graph.edges(node=(elems[i], elems[i + 1]), edge_type=EdgeType.SEMANTIC,
+                        v = sim_edge[0][2]
+                        sim_edge = self.cna_graph.edges(node=(elems[i], elems[i + 1]), edge_type=EdgeType.SEMANTIC,
                                                     vector_model=None)
-                    v += sim_edge[0][2]
-                    v /= 2
-                    elems[i].indices[self] = v
+                    
+                        v += sim_edge[0][2]
+                        v /= 2
+                        elems[i].indices[self] = v
+                    except:
+                        continue
             return ComplexityIndex.IDENTITY     
     
     def __repr__(self):

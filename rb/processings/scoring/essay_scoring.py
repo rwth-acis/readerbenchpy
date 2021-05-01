@@ -71,6 +71,10 @@ class EssayScoring:
             with open('rb/processings/scoring/indices_ro_scoring.txt', 'rt', encoding='utf-8') as f:
                 for line in f:
                     indices.append(line.strip())
+        elif lang is Lang.DE:
+            with open('rb/processings/scoring/indices_de_scoring.txt', 'rt', encoding='utf-8') as f:
+                for line in f:
+                    indices.append(line.strip())
                     
         vector_model = self.get_vector_model(lang=lang)
             
@@ -129,6 +133,7 @@ class EssayScoring:
 
     def train_svr(self, results: List[List], save_model_file=None):
         total = len(results)
+        print(total)
         train_samples = int(total * 0.80)
 
         train = results[:train_samples]

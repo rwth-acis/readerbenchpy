@@ -38,3 +38,4 @@ class Document(TextElement):
 
     def get_blocks(self) -> List[Block]:
         return self.components
+    

@@ -113,6 +113,7 @@ def create_vector_model(lang: Lang, model: VectorModelType, corpus: str, dim: in
                 save_model(vector_model=vector_model, lang=lang, 
                         model_type=model, corpus=corpus, dim=dim, model_abbr=model_abbr)
             elif model == VectorModelType.WORD2VEC:
+                logger.info('Here........')
                 vector_model = Word2Vec(corpus, lang, dim, check_updates=check_updates)
                 save_model(vector_model=vector_model, lang=lang, 
                         model_type=model, corpus=corpus, dim=dim, model_abbr=model_abbr)

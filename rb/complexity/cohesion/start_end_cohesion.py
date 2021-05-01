@@ -39,6 +39,9 @@ class StartEndCohesion(ComplexityIndex):
             end_block = element.get_blocks()[-1]
             sim_edge = self.cna_graph.edges(node=(start_block, end_block), edge_type=EdgeType.SEMANTIC, 
                                             vector_model=None)
-            v = sim_edge[0][2]
-            element.indices[self] = v
-            return v
+            try:
+                v = sim_edge[0][2]
+                element.indices[self] = v
+                return v
+            except:
+                return 0            
