@@ -11,7 +11,7 @@ from rb.utils.rblogger import Logger
 LINKS = {
     Lang.DE: {
         'models':{
-            'wikibooks':{
+            'wiki':{
                 'link':"https://rwth-aachen.sciebo.de/s/CNv6Fi4Wzl9D9Mt/download",
                 'version': "https://rwth-aachen.sciebo.de/s/kg5Tx1hu05NGGPl/download"
             }

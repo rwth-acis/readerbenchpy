@@ -27,7 +27,7 @@ VECTOR_MODELS = {
         }
     },
     Lang.DE: {
-        CorporaEnum.WIKIBOOKS: {
+        CorporaEnum.WIKI: {
             VectorModelType.WORD2VEC: Word2Vec,
             VectorModelType.LDA: LDA,
             VectorModelType.LSA: LSA
@@ -57,7 +57,7 @@ DEFAULT_MODELS = {
     Lang.ES: (VectorModelType.WORD2VEC, CorporaEnum.JOSE_ANTONIO),
     Lang.RU: (VectorModelType.WORD2VEC, CorporaEnum.RNC_WIKIPEDIA),
     Lang.FR: (VectorModelType.WORD2VEC, CorporaEnum.LE_MONDE),
-    Lang.DE: (VectorModelType.WORD2VEC, CorporaEnum.WIKIBOOKS)   
+    Lang.DE: (VectorModelType.WORD2VEC, CorporaEnum.WIKI)   
 }
 
 EXISTING_MODELS = {}

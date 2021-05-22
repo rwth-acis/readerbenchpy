@@ -55,7 +55,7 @@ def do_scoring():
         elif args.scoring_lang is Lang.EN:
             model = create_vector_model(Lang.EN, VectorModelType.from_str("word2vec"), "coca")
         elif args.scoring_lang is Lang.DE:
-            model = create_vector_model(Lang.DE, VectorModelType.from_str("word2vec"), "wikibooks")
+            model = create_vector_model(Lang.DE, VectorModelType.from_str("word2vec"), "wiki")
         else:
             logger.info(f'Unsopported lang {args.scoring_lang}')
 
@@ -135,7 +135,7 @@ def do_indices():
     elif args.indices_lang is Lang.EN:
         model = create_vector_model(Lang.EN, VectorModelType.from_str("word2vec"), "coca")
     elif args.indices_lang is Lang.DE:
-        model = create_vector_model(Lang.DE, VectorModelType.from_str("word2vec"), "wikibooks")
+        model = create_vector_model(Lang.DE, VectorModelType.from_str("word2vec"), "wiki")
     else:
         logger.info(f'No module for lang {args.indices_lang}')
         return

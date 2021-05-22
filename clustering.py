@@ -100,7 +100,7 @@ print("Score: ", score)
 filename = 'lsvc.sav'
 pickle.dump(lsvc, open(filename, 'wb'))
 
-model = create_vector_model(Lang.DE, VectorModelType.from_str("word2vec"), "wikibooks")
+model = create_vector_model(Lang.DE, VectorModelType.from_str("word2vec"), "wiki")
 text = "Aktuelle Entwicklungen in der Hochschulbildung den letzten drei Jahren lassen sich eine „Revolution“ darstellen, die nie zuvor in Geschichte der Hochschulbildung war. Diese Ereignisse vor allem beziehen sich auf das Internet und den Bildungsmarkt. Das Phänomen lässt sich als die „Demokratie der Hochschulbildung“ bezeichnen."
 document = Document(lang=Lang.DE, text=text)
 cna_graph = CnaGraph(docs=document, models=[model])
