@@ -18,7 +18,7 @@ LINKS = {
         },
         'wordlists': {
             'link': "https://rwth-aachen.sciebo.de/s/PMIjzRYfWbsg8F8/download",
-            'version':  'https://rwth-aachen.sciebo.de/s/kg5Tx1hu05NGGPl/download'
+            'version':  'https://rwth-aachen.sciebo.de/s/M1Z1ORPm9Xh1edi/download'
         }
     },
     Lang.EN: {
@@ -230,10 +230,15 @@ def download_wordlist(lang: Lang) -> bool:
         return False
     
     link = LINKS[lang]['wordlists']['link']
-    logger.info('Downloading wordlists for {} ...'.format(lang.value))
-    download_folder(link, base_path)
-    logger.info('Downloaded wordlists for {} successfully'.format(lang.value))
-    return True
+    #check version here
+    if check_wordlist_version(lang):
+        logger.info('Downloading wordlists for {} ...'.format(lang.value))
+        download_folder(link, base_path)
+        logger.info('Downloaded wordlists for {} successfully'.format(lang.value))
+        return True
+    else:
+        logger.info('wordlists are uptodate for {}'.format(lang.value))
+        return True
 
 def download_tags(lang: Lang) -> bool:
     path = "resources/{}/{}".format(lang.value, 'spacy')
@@ -370,6 +375,36 @@ def check_version(lang: Lang, name: Union[str, List[str]]) -> bool:
         logger.error('Could not find version link in links json')
         return True
 
+def check_wordlist_version(lang: Lang) -> bool:
+    logger.info('Checking version for wordlist {}'.format(lang.value))
+    path = "wordlist"
+    folder = "resources/{}/{}".format(lang.value, path)
+    try:
+        local_version = read_version(folder + "/version.txt")
+    except FileNotFoundError:
+        logger.info('Local  {} for {} not found.'.format(path, lang))
+        return True
+
+    if lang not in LINKS:
+        logger.error('{} not supported.'.format(lang))
+        return False
+    root = LINKS[lang]
+    key = 'wordlists'
+    if key not in root:
+        logger.error('Remote path not found {} ({}).'.format(path, key))
+        return False
+    root = root[key]
+    if isinstance(root, dict):
+        filename = wget.download(root['version'], out="resources/")
+        try:
+            remote_version = read_version(filename)
+        except FileNotFoundError:
+            logger.warning('Error reading remote version for {} ({})'.format(path, lang))
+            return False
+        return newer_version(remote_version, local_version)
+    else:
+        logger.error('Could not find version link in links json')
+        return True
 
 def read_version(filename: str) -> str:
     with open(filename, "r") as f:

@@ -13,77 +13,64 @@ from rb.core.lang import Lang
 from rb.similarity.vector_model import (CorporaEnum, VectorModel,
                                         VectorModelType)
 from rb.similarity.vector_model_factory import create_vector_model
+from sklearn.model_selection import train_test_split
+from matplotlib import pyplot as plt
+from sklearn import svm
+from sklearn.metrics import accuracy_score
 
-A1train = pd.read_csv('/home/user/level text/A1/input/stats.csv')
+A1level = pd.read_csv('/home/user/textData/A1/stats.csv')
 A1=[]
-for i in range(A1train.shape[0]):
-    A1.append("A1")
-A1train['level'] = A1
-print(A1train.head())
+for i in range(A1level.shape[0]):
+    A1.append("A")
+A1level['level'] = A1
+print(A1level.head())
 
-A2train = pd.read_csv('/home/user/level text/A2/input/stats.csv')
+A2level = pd.read_csv('/home/user/textData/A2/stats.csv')
 A2=[]
-for i in range(A2train.shape[0]):
-    A2.append("A2")
-A2train['level'] = A2
-print(A2train.head())
+for i in range(A2level.shape[0]):
+    A2.append("A")
+A2level['level'] = A2
+print(A2level.head())
 
-A2plustrain = pd.read_csv('/home/user/level text/A2+/input/stats.csv')
-A2plus=[]
-for i in range(A2plustrain.shape[0]):
-    A2plus.append("A2+")
-A2plustrain['level'] = A2plus
-print(A2plustrain.head())
 
-B1train = pd.read_csv('/home/user/level text/B1/input/stats.csv')
+
+B1level = pd.read_csv('/home/user/textData/B1/stats.csv')
 B1=[]
-for i in range(B1train.shape[0]):
-    B1.append("B1")
-B1train['level'] = B1
-print(B1train.head())
+for i in range(B1level.shape[0]):
+    B1.append("B")
+B1level['level'] = B1
+print(B1level.head())
 
-B1plustrain = pd.read_csv('/home/user/level text/B1+/input/stats.csv')
-B1plus=[]
-for i in range(B1plustrain.shape[0]):
-    B1plus.append("B1+")
-B1plustrain['level'] = B1plus
-print(B1plustrain.head())
 
-B2train = pd.read_csv('/home/user/level text/B2/input/stats.csv')
+
+B2level = pd.read_csv('/home/user/textData/B2/stats.csv')
 B2=[]
-for i in range(B2train.shape[0]):
-    B2.append("B2")
-B2train['level'] = B2
-print(B2train.head())
-
-B2plustrain = pd.read_csv('/home/user/level text/B2+/input/stats.csv')
-B2plus=[]
-for i in range(B2plustrain.shape[0]):
-    B2plus.append("B2+")
-B2plustrain['level'] = B2plus
-print(B2plustrain.head())
-
-C1train = pd.read_csv('/home/user/level text/C1/input/stats.csv')
-C1=[]
-for i in range(C1train.shape[0]):
-    C1.append("C1")
-C1train['level'] = C1
-print(C1train.head())
-
-C2train = pd.read_csv('/home/user/level text/C2/input/stats.csv')
-C2=[]
-for i in range(C2train.shape[0]):
-    C2.append("C2")
-C2train['level'] = C2
-print(A1train.head())
+for i in range(B2level.shape[0]):
+    B2.append("B")
+B2level['level'] = B2
+print(B2level.head())
 
 
-train = pd.concat([A1train, A2train, A2plustrain, B1train, B1plustrain, B2train, B2plustrain, C1train, C2train], ignore_index=True)
 
-train
+Clevel = pd.read_csv('/home/user/textData/C/stats.csv')
+C=[]
+for i in range(Clevel.shape[0]):
+    C.append("C")
+Clevel['level'] = C
+print(Clevel.head())
 
-xtrain=train.drop(columns=['filename','level'])#.astype(float)
-ytrain=train['level']
+
+
+
+data = pd.concat([A1level, A2level, B1level, B2level, Clevel], ignore_index=True)
+
+data
+
+x=data.drop(columns=['filename','level'])#.astype(float)
+y=data['level']
+X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=0.15)
+print (X_train.shape, Y_train.shape)
+print (X_test.shape, Y_test.shape)
 #print("***** Train_Set *****")
 #print(train.describe())
 #print(train.columns.values)
@@ -92,11 +79,19 @@ ytrain=train['level']
 #train.info()
 #X = np.array(train.drop(['filename'], 1).astype(float))
 lsvc = LinearSVC()
-lsvc.fit(xtrain, ytrain)
-score = lsvc.score(xtrain, ytrain)
+#lsvc = svm.SVC(kernel='rbf')
+lsvc.fit(X_train, Y_train)
+score = lsvc.score(X_test, Y_test)
 # save the model to disk
 
 print("Score: ", score)
+predictions = lsvc.predict(X_test)
+...
+# make predictions
+yhat = lsvc.predict(X_test)
+# evaluate predictions
+acc = accuracy_score(Y_test, yhat)
+print('Accuracy: %.3f' % acc)
 filename = 'lsvc.sav'
 pickle.dump(lsvc, open(filename, 'wb'))
 
@@ -110,9 +105,9 @@ for key, v in document.indices.items():
     data[repr(key)] = [v]
 
 
-item = pd.DataFrame.from_dict(data)
-print(item.head())
-yitem = lsvc.predict(item)
+#item = pd.DataFrame.from_dict(data)
+#print(item.head())
+#yitem = lsvc.predict(item)
 
-print(yitem)
+#print(yitem)
 
