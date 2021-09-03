@@ -198,7 +198,7 @@ class VectorModel:
                 new_hash = hash ^ (1 << (len(self.base_vectors) - i - 1))
                 for j in range(i+1, len(self.base_vectors)):
                     new_hash = new_hash ^ (1 << (len(self.base_vectors) - j - 1))
-                    cluster = cluster + self.get_cluster(new_hash, elem, threshold)
+                    cluster = cluster + self.get_cluster(dow, elem, threshold)
         return sorted(cluster, key=lambda x: x[1], reverse=True)[:topN]
 
 

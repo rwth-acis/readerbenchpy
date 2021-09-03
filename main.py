@@ -29,17 +29,7 @@ from rb.utils.downloader import download_scoring, download_classifier
 
 logger = Logger.get_logger()
 
-test = """I. Evaluarea performantelor profesionale
-        Motto:
-        "Daca nu poti masura ceva, nu-l poti intelege,
-        Daca nu-l poti intelege, nu-l poti controla,
-        Daca nu-l poti controla, nu-l poti imbunatati."
-        H.I.Harrington
-        Capacitatea de cunoastere a omului este inseparabila de abilitatea sa de a evalua, care face posibila selectia, ierarhizarea si sistematizarea informatiilor. Fie ca vizeaza obiective, fenomene sau procese, plasarea pe o anumita pozitie a unei scari valorice determina in mod curent atitudini, decizii si actiuni.
-        Din perspectiva manageriala, aprecierea rezultatelor unei activitati, raportate la obiectivele organizatiei si in relatie cu contextul real in care se defasoara, constituie o conditie a oricarui demers de perfectionare sau de adaptare. La nivel individual, de organizatie sau sistem, evaluarea corect efectuata permite intelegerea clara a deficientelor si deschide calea unor posibile imbunatatiri.1
-        I.1. Tipuri de evaluare
-        Evaluarea ca notiune are un caracter complex, determinat de diversi factori functie de care se realizeaza. Astfel, unii autori2 considera evaluarea personalului ca fiind"actul prin care un responsabil ierarhic efectueaza o apreciere formalizata a subordonatilor sai", iar daca aceste aprecieri au loc anual atunci este vorba despre"un sistem de apreciere" al organizatiei. Alti autori fac referire doar la performantele obtinute, fiind considerata"activitatea de baza a managementului resurselor umane, desfasurata in vederea determinarii gradului in care angajatii unei organizatii indeplinesc eficient sarcinile si responsabilitatile care le revin"3
-"""
+test = "Ein junger Ritter ritt durch den Wald. Der Ritter kannte sich in dem Land nicht aus. Plötzlich tauchte ein Drache auf. Der Drache entführte eine schöne Prinzessin. Der Ritter wollte die Prinzessin befreien. Der Ritter wollte die Prinzessin heiraten. Der Ritter eilte dem Drachen hinterher. Sie kämpften um Leben und Tod. Bald war die Rüstung des Ritters völlig verbrannt. Schließlich tötete der Ritter den Drachen. Der Ritter befreite die Prinzessin. Die Prinzessin war dem Ritter sehr dankbar. Sie heiratete den Ritter."
 
 ff = open('debug2.txt', 'w', encoding='utf-8')
 
@@ -190,8 +180,7 @@ def do_feedback():
 """ TODO not finished for now """
 def do_keywords():
     global args
-    keywords_extractor = KeywordExtractor()
-    keywords = keywords_extractor.extract_keywords(text=test, lang=args.keywords_lang)
+    keywords = KeywordExtractor.extract_keywords(text=test, lang=args.keywords_lang)
     print(keywords)
 
 def do_clustering():

@@ -33,7 +33,8 @@ class KeywordExtractor:
 
         for word in doc.get_words():
             if word.is_content_word() and not word.is_stop:
-                raw_words.append(word)
+                if word.is_noun():
+                    raw_words.append(word)
 
         counter = Counter(raw_words)
         

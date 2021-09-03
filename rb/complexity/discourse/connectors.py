@@ -35,6 +35,8 @@ class Connector(ComplexityIndex):
             path_to_wordlist = 'resources/ro/wordlists/connectives_ro.txt'
         elif lang is Lang.EN:
             path_to_wordlist = 'resources/en/wordlists/connectives_en.txt'
+        elif lang is Lang.DE:
+            path_to_wordlist = 'resources/de/wordlists/connectives_de.txt'
 
         with open(path_to_wordlist, 'rt', encoding='utf-8') as f:
             Connector.conn_dict = {}

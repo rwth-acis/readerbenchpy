@@ -56,6 +56,9 @@ class Word(TextElement):
         if self.lang not in self.MODAL_VERBS:
             return False
         return self.pos is POS.VERB and self.lemma in self.MODAL_VERBS[self.lang]
+    
+    def is_noun(self) -> bool:
+        return self.is_dict_word() and self.pos in {POS.NOUN}
             
     def get_sentences(self) -> List["Sentence"]:
         return []

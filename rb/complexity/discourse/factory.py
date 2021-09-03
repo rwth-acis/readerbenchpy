@@ -15,7 +15,7 @@ def create(lang: Lang, cna_graph: CnaGraph) -> List["ComplexityIndex"]:
     
     indices = []
 
-    if lang is Lang.RO or lang is Lang.EN:
+    if lang is Lang.RO or lang is Lang.EN or lang is Lang.DE:
         for ct in ConnTypeEnum:
             indices.append(Connector(lang, ct, TextElementType.SENT.value, MeasureFunction.AVG))
             indices.append(Connector(lang, ct, TextElementType.BLOCK.value, MeasureFunction.AVG))
